@@ -1,68 +1,112 @@
-# BÁO CÁO KIỂM THỬ API - POKEAPI
+# Báo Cáo Kiểm Thử API - PokéAPI (Ditto)
 
-**Người thực hiện:** Lê Xuân Khóa
-**Ngày kiểm thử:** 17/06/2026  
-**Công cụ sử dụng:** Postman  
-**Workspace:** Khoa Le Xuan's Workspace  
+## Thông Tin Chung
 
----
-
-## 1. Thông Tin API Được Kiểm Thử
-
-| Thuộc tính       | Chi tiết                                  |
-|------------------|-------------------------------------------|
-| Tên request      | Get data                                  |
-| Phương thức      | GET                                       |
-| URL              | https://pokeapi.co/api/v2/pokemon/ditto   |
-| Collection       | My Collection                             |
-| Trạng thái HTTP  | 200 OK                                    |
-| Mô tả            | Lấy thông tin chi tiết của Pokémon Ditto  |
+| Mục | Chi tiết |
+|-----|----------|
+| **API Endpoint** | `GET https://pokeapi.co/api/v2/pokemon/ditto` |
+| **Phương thức** | GET |
+| **Tên request** | Get data |
+| **Collection** | My Collection |
+| **Workspace** | Khoa Le Xuan's Workspace |
+| **Ngày kiểm thử** | 17/06/2026 |
+| **Tổng số test cases** | 25 |
+| **Kết quả** | ✅ 25/25 PASSED |
 
 ---
 
-## 2. Danh Sách Kịch Bản Kiểm Thử
+## Mô Tả API
 
-| STT | Tên kịch bản | Mục tiêu | Kết quả mong đợi | Kết quả thực tế | Trạng thái |
-|-----|-------------|----------|------------------|-----------------|------------|
-| 1 | Status code là 200 | Kiểm tra API phản hồi thành công | Status 200 | Status 200 | ✅ PASSED |
-| 2 | Thời gian phản hồi dưới 3000ms | Kiểm tra hiệu năng API | responseTime < 3000ms | Đạt yêu cầu | ✅ PASSED |
-| 3 | Content-Type là application/json | Kiểm tra định dạng header | Header chứa `application/json` | Đúng định dạng | ✅ PASSED |
-| 4 | Response body là JSON hợp lệ | Kiểm tra cấu trúc dữ liệu | Body parse được thành JSON | JSON hợp lệ | ✅ PASSED |
-| 5 | Tên Pokémon là 'ditto' | Kiểm tra đúng dữ liệu trả về | `name == "ditto"` | `name = "ditto"` | ✅ PASSED |
-| 6 | ID của Ditto là 132 | Kiểm tra ID chính xác | `id == 132` | `id = 132` | ✅ PASSED |
-| 7 | Response chứa các trường bắt buộc | Kiểm tra tính đầy đủ của dữ liệu | Có `name`, `id`, `abilities`, `types`, `stats`, `base_experience` | Đầy đủ các trường | ✅ PASSED |
-| 8 | Abilities là mảng không rỗng | Kiểm tra dữ liệu abilities hợp lệ | `abilities.length > 0` | 2 abilities | ✅ PASSED |
-| 9 | Types là mảng không rỗng | Kiểm tra dữ liệu types hợp lệ | `types.length > 0` | 1 type | ✅ PASSED |
-| 10 | Base experience là số dương | Kiểm tra giá trị hợp lệ | `base_experience > 0` | `base_experience = 101` | ✅ PASSED |
+PokéAPI là một RESTful API công khai cung cấp dữ liệu về thế giới Pokémon.
+Endpoint `GET /api/v2/pokemon/ditto` trả về toàn bộ thông tin về Pokémon Ditto
+(ID: 132), bao gồm chỉ số, khả năng, loại, hình ảnh và nhiều thông tin khác.
 
 ---
 
-## 3. Kết Quả Tổng Hợp
+## Kết Quả Kiểm Thử
 
-| Chỉ số            | Giá trị |
-|-------------------|---------|
-| Tổng số test      | 10      |
-| Số test PASSED    | 10      |
-| Số test FAILED    | 0       |
-| Tỷ lệ thành công  | 100%    |
+### Nhóm 1 — Kiểm Tra Cơ Bản (5 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 1 | Status code là 200 | HTTP status code trả về đúng 200 OK | ✅ PASSED |
+| 2 | Thời gian phản hồi dưới 3000ms | Response time phải nhỏ hơn 3000ms | ✅ PASSED |
+| 3 | Content-Type là application/json | Header Content-Type phải chứa `application/json` | ✅ PASSED |
+| 4 | Response body là JSON hợp lệ | Body phải parse được thành JSON hợp lệ | ✅ PASSED |
+| 5 | Tên Pokémon là 'ditto' | Trường `name` trong response phải bằng `"ditto"` | ✅ PASSED |
+
+### Nhóm 2 — Kiểm Tra Dữ Liệu Định Danh (2 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 6 | ID của Ditto là 132 | Trường `id` phải bằng `132` | ✅ PASSED |
+| 7 | Response chứa các trường bắt buộc | Các trường `name`, `id`, `abilities`, `types`, `stats`, `base_experience` phải tồn tại | ✅ PASSED |
+
+### Nhóm 3 — Kiểm Tra Mảng Dữ Liệu (2 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 8 | Abilities là mảng không rỗng | Trường `abilities` phải là mảng và có ít nhất 1 phần tử | ✅ PASSED |
+| 9 | Types là mảng không rỗng | Trường `types` phải là mảng và có ít nhất 1 phần tử | ✅ PASSED |
+
+### Nhóm 4 — Kiểm Tra Giá Trị Số (1 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 10 | Base experience là số dương | `base_experience` phải lớn hơn 0 | ✅ PASSED |
+
+### Nhóm 5 — Cấu Trúc Dữ Liệu Chi Tiết (5 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 11 | Stats có đúng 6 chỉ số | Mảng `stats` phải có đúng 6 phần tử (HP, Attack, Defense, Sp.Atk, Sp.Def, Speed) | ✅ PASSED |
+| 12 | Mỗi stat có base_stat là số dương | Mỗi phần tử trong `stats` phải có `base_stat > 0` | ✅ PASSED |
+| 13 | Weight là số dương | Trường `weight` phải lớn hơn 0 | ✅ PASSED |
+| 14 | Height là số dương | Trường `height` phải lớn hơn 0 | ✅ PASSED |
+| 15 | sprites.front_default là URL hợp lệ | `sprites.front_default` phải bắt đầu bằng `http` | ✅ PASSED |
+
+### Nhóm 6 — Kiểm Tra Kiểu Dữ Liệu (3 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 16 | id là kiểu number | Trường `id` phải có kiểu dữ liệu `number` | ✅ PASSED |
+| 17 | name là kiểu string | Trường `name` phải có kiểu dữ liệu `string` | ✅ PASSED |
+| 18 | is_hidden trong abilities là kiểu boolean | Trường `is_hidden` trong mỗi ability phải là `boolean` | ✅ PASSED |
+
+### Nhóm 7 — Kiểm Tra Giá Trị Hợp Lệ (3 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 19 | base_experience nằm trong khoảng 1 đến 1000 | `base_experience` phải trong khoảng [1, 1000] | ✅ PASSED |
+| 20 | order là số nguyên dương | Trường `order` phải là số nguyên dương | ✅ PASSED |
+| 21 | Type của Ditto là 'normal' | Pokémon type đầu tiên phải là `"normal"` | ✅ PASSED |
+
+### Nhóm 8 — Kiểm Tra Response Header (2 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 22 | Header Cache-Control tồn tại | Response header phải có `Cache-Control` | ✅ PASSED |
+| 23 | Header Transfer-Encoding hoặc Content-Length tồn tại | Phải có ít nhất một trong hai header | ✅ PASSED |
+
+### Nhóm 9 — Lưu Biến (2 test)
+
+| # | Tên Test Case | Mô tả | Kết quả |
+|---|---------------|-------|---------|
+| 24 | Lưu id vào collection variable | Lưu `pokemon_id = 132` vào collection variable | ✅ PASSED |
+| 25 | Lưu name vào collection variable | Lưu `pokemon_name = "ditto"` vào collection variable | ✅ PASSED |
 
 ---
 
-## 4. Dữ Liệu Mẫu Từ Response
+## Tổng Kết
+Tổng số test case passed: 25/25
 
-```json
-{
-  "id": 132,
-  "name": "ditto",
-  "base_experience": 101,
-  "abilities": [
-    { "ability": { "name": "limber" }, "is_hidden": false, "slot": 1 },
-    { "ability": { "name": "imposter" }, "is_hidden": true, "slot": 3 }
-  ],
-  "types": [
-    { "type": { "name": "normal" }, "slot": 1 }
-  ],
-  "forms": [
-    { "name": "ditto" }
-  ]
-}
+### Nhận Xét
+
+- API hoạt động ổn định, trả về đúng dữ liệu cho Pokémon Ditto.
+- Tất cả 25 test cases đều **PASSED**, không có lỗi nào phát sinh.
+- Response time nằm trong ngưỡng cho phép (< 3000ms).
+- Cấu trúc dữ liệu JSON đầy đủ và đúng định dạng.
+- Các kiểu dữ liệu (`number`, `string`, `boolean`) đều chính xác.
+- Giá trị các trường quan trọng (`id`, `name`, `type`) khớp với dữ liệu thực tế.
+
+---
