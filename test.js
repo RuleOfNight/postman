@@ -59,3 +59,94 @@ pm.test("Base experience là số dương", function () {
     const jsonData = pm.response.json();
     pm.expect(jsonData.base_experience).to.be.a("number").and.to.be.above(0);
 });
+
+
+
+pm.test("Stats có đúng 6 chỉ số", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.stats).to.be.an("array").with.lengthOf(6);
+});
+
+pm.test("Mỗi stat có base_stat là số dương", function () {
+    const jsonData = pm.response.json();
+    jsonData.stats.forEach(function(stat) {
+        pm.expect(stat.base_stat).to.be.a("number").and.to.be.above(0);
+    });
+});
+
+pm.test("Weight là số dương", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.weight).to.be.a("number").and.to.be.above(0);
+});
+
+pm.test("Height là số dương", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.height).to.be.a("number").and.to.be.above(0);
+});
+
+pm.test("sprites.front_default là URL hợp lệ", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.sprites.front_default).to.be.a("string").and.to.include("http");
+});
+
+
+pm.test("id là kiểu number", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.id).to.be.a("number");
+});
+
+pm.test("name là kiểu string", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.name).to.be.a("string");
+});
+
+pm.test("is_hidden trong abilities là kiểu boolean", function () {
+    const jsonData = pm.response.json();
+    jsonData.abilities.forEach(function(a) {
+        pm.expect(a.is_hidden).to.be.a("boolean");
+    });
+});
+
+
+
+pm.test("base_experience nằm trong khoảng 1 đến 1000", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.base_experience).to.be.within(1, 1000);
+});
+
+pm.test("order là số nguyên dương", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.order).to.be.a("number").and.to.be.above(0);
+});
+
+pm.test("Type của Ditto là 'normal'", function () {
+    const jsonData = pm.response.json();
+    const typeNames = jsonData.types.map(t => t.type.name);
+    pm.expect(typeNames).to.include("normal");
+});
+
+
+
+pm.test("Header Cache-Control tồn tại", function () {
+    pm.response.to.have.header("Cache-Control");
+});
+
+pm.test("Header Transfer-Encoding hoặc Content-Length tồn tại", function () {
+    const hasTransfer = pm.response.headers.has("Transfer-Encoding");
+    const hasContentLength = pm.response.headers.has("Content-Length");
+    pm.expect(hasTransfer || hasContentLength).to.be.true;
+});
+
+
+
+pm.test("Lưu id vào collection variable", function () {
+    const jsonData = pm.response.json();
+    pm.collectionVariables.set("pokemon_id", jsonData.id);
+    pm.expect(pm.collectionVariables.get("pokemon_id")).to.eql(jsonData.id);
+});
+
+pm.test("Lưu name vào collection variable", function () {
+    const jsonData = pm.response.json();
+    pm.collectionVariables.set("pokemon_name", jsonData.name);
+    pm.expect(pm.collectionVariables.get("pokemon_name")).to.eql(jsonData.name);
+});
